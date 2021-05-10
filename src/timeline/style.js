@@ -2,7 +2,7 @@
 import {Platform, StyleSheet} from 'react-native';
 
 // const eventPaddingLeft = 4
-const leftMargin = 50 - 1;
+const leftMargin = 60 - 1;
 
 export default function styleConstructor(theme = {}, calendarHeight) {
   let style = {
@@ -13,7 +13,8 @@ export default function styleConstructor(theme = {}, calendarHeight) {
     },
     contentStyle: {
       backgroundColor: '#ffff',
-      height: calendarHeight + 10,
+      marginTop: 50,
+      height: calendarHeight + 60,
       ...theme.contentStyle
     },
     header: {
@@ -86,7 +87,6 @@ export default function styleConstructor(theme = {}, calendarHeight) {
       height: 1,
       position: 'absolute',
       left: leftMargin,
-      backgroundColor: 'rgb(216,216,216)',
       ...theme.line
     },
     lineNow: {

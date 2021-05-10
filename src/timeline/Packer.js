@@ -1,7 +1,7 @@
 // @flow
 import XDate from 'xdate';
 
-const offset = 100;
+const offset = 50;
 
 function buildEvent(column, left, width, dayStart) {
   const startTime = XDate(column.start);

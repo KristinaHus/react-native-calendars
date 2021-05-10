@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import XDate from 'xdate';
 import React from 'react';
 import {View, Text, ScrollView, TouchableOpacity, Dimensions} from 'react-native';
+import Dash from 'react-native-dash';
 import styleConstructor from './style';
 import populateEvents from './Packer';
 
@@ -22,6 +23,7 @@ export default class Timeline extends React.PureComponent {
     end: PropTypes.number,
     eventTapped: PropTypes.func,
     format24h: PropTypes.bool,
+    line: PropTypes.object,
     events: PropTypes.arrayOf(
       PropTypes.shape({
         start: PropTypes.string.isRequired,
@@ -37,14 +39,20 @@ export default class Timeline extends React.PureComponent {
     start: 0,
     end: 24,
     events: [],
-    format24h: true
+    format24h: true,
+    line: {
+      dashGap: 0,
+      dashLength: 1,
+      dashThickness: 1,
+      dashColor: 'black'
+    }
   };
 
   constructor(props) {
     super(props);
 
     const {start, end} = this.props;
-    this.calendarHeight = (end - start) * 100;
+    this.calendarHeight = (end - start) * 50;
 
     this.style = styleConstructor(props.styles, this.calendarHeight);
 
@@ -88,16 +96,14 @@ export default class Timeline extends React.PureComponent {
   }
 
   _renderLines() {
-    const {format24h, start = 0, end = 24} = this.props;
+    const {format24h, start = 0, end = 24, line, theme} = this.props;
     const offset = this.calendarHeight / (end - start);
     const EVENT_DIFF = 20;
 
     return range(start, end + 1).map((i, index) => {
       let timeText;
 
-      if (i === start) {
-        timeText = '';
-      } else if (i < 12) {
+      if (i < 12) {
         timeText = !format24h ? `${i} AM` : `${i}:00`;
       } else if (i === 12) {
         timeText = !format24h ? `${i} PM` : `${i}:00`;
@@ -108,15 +114,16 @@ export default class Timeline extends React.PureComponent {
       }
 
       return [
-        <Text key={`timeLabel${i}`} style={[this.style.timeLabel, {top: offset * index - 6}]}>
+        <Text key={`timeLabel${i}`} style={[this.style.timeLabel, {top: offset * index - 6, ...theme.time}]}>
           {timeText}
         </Text>,
-        i === start ? null : (
-          <View key={`line${i}`} style={[this.style.line, {top: offset * index, width: dimensionWidth - EVENT_DIFF}]} />
-        ),
-        <View
-          key={`lineHalf${i}`}
-          style={[this.style.line, {top: offset * (index + 0.5), width: dimensionWidth - EVENT_DIFF}]}
+        <Dash
+          key={`line${i}`}
+          dashGap={line.dashGap}
+          dashLength={line.dashLength}
+          dashThickness={line.dashThickness}
+          dashColor={line.dashColor}
+          style={[this.style.line, {top: offset * index, width: dimensionWidth - EVENT_DIFF}]}
         />
       ];
     });
