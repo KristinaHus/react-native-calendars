@@ -11,8 +11,8 @@ function buildEvent(column, left, width, dayStart) {
 
   column.top = (dayStartTime.diffHours(startTime) - dayStart) * offset;
   column.height = startTime.diffHours(endTime) * offset;
-  column.width = width;
-  column.left = left;
+  column.width = width - 50;
+  column.left = left + 25;
   return column;
 }
 
