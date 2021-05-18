@@ -114,7 +114,7 @@ export default class Timeline extends React.PureComponent {
       }
 
       return [
-        <Text key={`timeLabel${i}`} style={[this.style.timeLabel, {top: offset * index - 6, ...theme.time}]}>
+        <Text key={`timeLabel${i}`} style={[this.style.timeLabel, {top: offset * index, ...theme.time}]}>
           {timeText}
         </Text>,
         <Dash
@@ -123,7 +123,7 @@ export default class Timeline extends React.PureComponent {
           dashLength={line.dashLength}
           dashThickness={line.dashThickness}
           dashColor={line.dashColor}
-          style={[this.style.line, {top: offset * index, width: dimensionWidth - EVENT_DIFF}]}
+          style={[this.style.line, {top: offset * index + 6, width: dimensionWidth - EVENT_DIFF}]}
         />
       ];
     });

@@ -9,7 +9,7 @@ function buildEvent(column, left, width, dayStart) {
 
   const dayStartTime = XDate(startTime).clearTime();
 
-  column.top = (dayStartTime.diffHours(startTime) - dayStart) * offset;
+  column.top = (dayStartTime.diffHours(startTime) - dayStart) * offset + 6;
   column.height = startTime.diffHours(endTime) * offset;
   column.width = width - 50;
   column.left = left + 25;
