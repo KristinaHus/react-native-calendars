@@ -24,6 +24,7 @@ export default class Timeline extends React.PureComponent {
     eventTapped: PropTypes.func,
     format24h: PropTypes.bool,
     line: PropTypes.object,
+    theme: PropTypes.object,
     events: PropTypes.arrayOf(
       PropTypes.shape({
         start: PropTypes.string.isRequired,
@@ -40,6 +41,7 @@ export default class Timeline extends React.PureComponent {
     end: 24,
     events: [],
     format24h: true,
+    theme: {},
     line: {
       dashGap: 0,
       dashLength: 1,
@@ -189,10 +191,11 @@ export default class Timeline extends React.PureComponent {
   }
 
   render() {
+    const {theme} = this.props;
     return (
       <ScrollView
         ref={ref => (this._scrollView = ref)}
-        contentContainerStyle={[this.style.contentStyle, {width: dimensionWidth}]}
+        contentContainerStyle={[this.style.contentStyle, {width: theme.maxWidth ? theme.maxWidth : dimensionWidth}]}
       >
         {this._renderLines()}
         {this._renderEvents()}
