@@ -25,6 +25,7 @@ export default class Timeline extends React.PureComponent {
     format24h: PropTypes.bool,
     line: PropTypes.object,
     theme: PropTypes.object,
+    width: PropTypes.number,
     events: PropTypes.arrayOf(
       PropTypes.shape({
         start: PropTypes.string.isRequired,
@@ -42,6 +43,7 @@ export default class Timeline extends React.PureComponent {
     events: [],
     format24h: true,
     theme: {},
+    width: 0,
     line: {
       dashGap: 0,
       dashLength: 1,
@@ -58,7 +60,7 @@ export default class Timeline extends React.PureComponent {
 
     this.style = styleConstructor(props.styles, this.calendarHeight);
 
-    const width = dimensionWidth - LEFT_MARGIN;
+    const width = (this.props.width ? this.props.width : dimensionWidth) - LEFT_MARGIN;
     const packedEvents = populateEvents(props.events, width, start);
     let initPosition = _.min(_.map(packedEvents, 'top')) - this.calendarHeight / (end - start);
     const verifiedInitPosition = initPosition < 0 ? 0 : initPosition;
@@ -70,7 +72,7 @@ export default class Timeline extends React.PureComponent {
   }
 
   componentDidUpdate(prevProps) {
-    const width = dimensionWidth - LEFT_MARGIN;
+    const width = (this.props.width ? this.props.width : dimensionWidth) - LEFT_MARGIN;
     const {events: prevEvents, start: prevStart = 0} = prevProps;
     const {events, start = 0} = this.props;
 
