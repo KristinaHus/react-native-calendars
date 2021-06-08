@@ -73,10 +73,10 @@ export default class Timeline extends React.PureComponent {
 
   componentDidUpdate(prevProps) {
     const width = (this.props.width ? this.props.width : dimensionWidth) - LEFT_MARGIN;
-    const {events: prevEvents, start: prevStart = 0} = prevProps;
+    const {events: prevEvents, start: prevStart = 0, width: prevWidth} = prevProps;
     const {events, start = 0} = this.props;
 
-    if (prevEvents !== events || prevStart !== start) {
+    if (prevEvents !== events || prevStart !== start || prevWidth !== this.props.width) {
       this.setState({
         packedEvents: populateEvents(events, width, start)
       });
