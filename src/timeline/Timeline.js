@@ -76,7 +76,7 @@ export default class Timeline extends React.PureComponent {
     const {events: prevEvents, start: prevStart = 0, width: prevWidth} = prevProps;
     const {events, start = 0} = this.props;
 
-    if (prevEvents !== events || prevStart !== start || prevWidth !== this.props.width) {
+    if (prevEvents !== events || prevStart !== start || (this.props.width && prevWidth !== this.props.width)) {
       this.setState({
         packedEvents: populateEvents(events, width, start)
       });
